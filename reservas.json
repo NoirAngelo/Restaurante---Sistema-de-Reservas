@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "app": "ReservaMesa",
+    "descripcion": "Archivo de datos del sistema de reservas de restaurante",
+    "storage_key": "reservamesa_data",
+    "exportado": "2025-06-08T00:00:00.000Z"
+  },
+  "mesas": [
+    { "id": "mesa_1", "nombre": "Mesa 1", "capacidad": 2, "zona": "Interior" },
+    { "id": "mesa_2", "nombre": "Mesa 2", "capacidad": 2, "zona": "Interior" },
+    { "id": "mesa_3", "nombre": "Mesa 3", "capacidad": 4, "zona": "Interior" },
+    { "id": "mesa_4", "nombre": "Mesa 4", "capacidad": 4, "zona": "Terraza" },
+    { "id": "mesa_5", "nombre": "Mesa 5", "capacidad": 6, "zona": "Terraza" },
+    { "id": "mesa_6", "nombre": "Mesa 6", "capacidad": 6, "zona": "Privado" },
+    { "id": "mesa_7", "nombre": "Mesa 7", "capacidad": 8, "zona": "Privado" },
+    { "id": "mesa_8", "nombre": "Mesa 8", "capacidad": 8, "zona": "Salón VIP" }
+  ],
+  "horarios_disponibles": [
+    "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+    "19:00", "19:30", "20:00", "20:30", "21:00", "21:30"
+  ],
+  "estados_validos": ["Confirmada", "Pendiente", "Cancelada"],
+  "reservas": [
+    {
+      "id": "rsv_ejemplo001",
+      "nombre": "Carlos Mendoza",
+      "telefono": "+51 987 654 321",
+      "fecha": "2025-06-08",
+      "hora": "20:00",
+      "mesa": "Mesa 3 (4 personas)",
+      "personas": 3,
+      "notas": "Aniversario",
+      "estado": "Confirmada",
+      "creado": "2025-06-07T10:00:00.000Z"
+    },
+    {
+      "id": "rsv_ejemplo002",
+      "nombre": "Ana Quispe",
+      "telefono": "+51 912 345 678",
+      "fecha": "2025-06-08",
+      "hora": "13:00",
+      "mesa": "Mesa 1 (2 personas)",
+      "personas": 2,
+      "notas": "",
+      "estado": "Pendiente",
+      "creado": "2025-06-07T11:30:00.000Z"
+    },
+    {
+      "id": "rsv_ejemplo003",
+      "nombre": "Jorge Huamán",
+      "telefono": "+51 956 789 012",
+      "fecha": "2025-06-09",
+      "hora": "19:30",
+      "mesa": "Mesa 5 (6 personas)",
+      "personas": 5,
+      "notas": "Cumpleaños",
+      "estado": "Confirmada",
+      "creado": "2025-06-07T12:00:00.000Z"
+    },
+    {
+      "id": "rsv_ejemplo004",
+      "nombre": "Lucía Torres",
+      "telefono": "+51 934 567 890",
+      "fecha": "2025-06-10",
+      "hora": "21:00",
+      "mesa": "Mesa 7 (8 personas)",
+      "personas": 7,
+      "notas": "Reunión de empresa",
+      "estado": "Confirmada",
+      "creado": "2025-06-07T13:15:00.000Z"
+    },
+    {
+      "id": "rsv_ejemplo005",
+      "nombre": "Pedro Ramírez",
+      "telefono": "+51 978 123 456",
+      "fecha": "2025-06-11",
+      "hora": "12:30",
+      "mesa": "Mesa 2 (2 personas)",
+      "personas": 2,
+      "notas": "",
+      "estado": "Cancelada",
+      "creado": "2025-06-07T14:00:00.000Z"
+    },
+    {
+      "id": "rsv_ejemplo006",
+      "nombre": "Sofía Vargas",
+      "telefono": "+51 901 234 567",
+      "fecha": "2025-06-13",
+      "hora": "20:30",
+      "mesa": "Mesa 4 (4 personas)",
+      "personas": 4,
+      "notas": "Ventana preferida",
+      "estado": "Pendiente",
+      "creado": "2025-06-07T15:00:00.000Z"
+    },
+    {
+      "id": "rsv_ejemplo007",
+      "nombre": "Miguel Castillo",
+      "telefono": "+51 965 432 109",
+      "fecha": "2025-06-15",
+      "hora": "19:00",
+      "mesa": "Mesa 6 (6 personas)",
+      "personas": 6,
+      "notas": "",
+      "estado": "Confirmada",
+      "creado": "2025-06-07T16:00:00.000Z"
+    },
+    {
+      "id": "rsv_ejemplo008",
+      "nombre": "Rosa Fernández",
+      "telefono": "+51 923 456 780",
+      "fecha": "2025-06-16",
+      "hora": "13:30",
+      "mesa": "Mesa 3 (4 personas)",
+      "personas": 3,
+      "notas": "Alergia al gluten",
+      "estado": "Confirmada",
+      "creado": "2025-06-07T17:00:00.000Z"
+    }
+  ]
+}

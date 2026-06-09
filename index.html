@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurante — Sistema de Reservas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- SIDEBAR NAV -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">Restaurante</span>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-view="dashboard" onclick="switchView('dashboard')">
+        <span class="nav-icon">◈</span> Dashboard
+      </button>
+      <button class="nav-item" data-view="nueva" onclick="switchView('nueva')">
+        <span class="nav-icon">＋</span> Nueva Reserva
+      </button>
+      <button class="nav-item" data-view="reservas" onclick="switchView('reservas')">
+        <span class="nav-icon">≡</span> Reservas
+      </button>
+      <button class="nav-item" data-view="calendario" onclick="switchView('calendario')">
+        <span class="nav-icon">▦</span> Calendario
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <span>v1.0</span>
+    </div>
+  </aside>
+
+  <!-- HAMBURGER -->
+  <button class="hamburger" id="hamburger" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="main">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div class="topbar-actions">
+        <div class="search-wrap">
+          <input type="text" id="searchInput" placeholder="Buscar reserva..." oninput="buscarReserva()" />
+          <span class="search-icon">🔍</span>
+        </div>
+        <div class="date-badge" id="date-today"></div>
+      </div>
+    </header>
+
+    <!-- VISTA: DASHBOARD -->
+    <section class="view active" id="view-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card accent">
+          <div class="stat-label">Total Reservas</div>
+          <div class="stat-value" id="stat-total">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Hoy</div>
+          <div class="stat-value" id="stat-hoy">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Confirmadas</div>
+          <div class="stat-value" id="stat-confirmadas">0</div>
+        </div>
+        <div class="stat-card warn">
+          <div class="stat-label">Pendientes</div>
+          <div class="stat-value" id="stat-pendientes">0</div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="dash-panel">
+          <div class="panel-header">
+            <h2>Próximas Reservas</h2>
+            <button class="btn-ghost" onclick="switchView('reservas')">Ver todas →</button>
+          </div>
+          <div id="proximas-list" class="proximas-list"></div>
+        </div>
+        <div class="dash-panel">
+          <div class="panel-header"><h2>Mesas Más Solicitadas</h2></div>
+          <div id="mesas-chart" class="mesas-chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA: NUEVA RESERVA -->
+    <section class="view" id="view-nueva">
+      <div class="form-container">
+        <div class="form-header">
+          <h2>Registrar Reserva</h2>
+          <p>Completa todos los campos para crear una nueva reserva.</p>
+        </div>
+        <div class="form-body">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre del Cliente</label>
+              <input type="text" id="f-nombre" placeholder="Ej. María López" />
+            </div>
+            <div class="form-group">
+              <label>Teléfono</label>
+              <input type="tel" id="f-telefono" placeholder="+51 999 000 000" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Fecha</label>
+              <input type="date" id="f-fecha" />
+            </div>
+            <div class="form-group">
+              <label>Hora</label>
+              <select id="f-hora">
+                <option value="">-- Selecciona --</option>
+                <option>12:00</option><option>12:30</option>
+                <option>13:00</option><option>13:30</option>
+                <option>14:00</option><option>14:30</option>
+                <option>19:00</option><option>19:30</option>
+                <option>20:00</option><option>20:30</option>
+                <option>21:00</option><option>21:30</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Mesa</label>
+              <select id="f-mesa">
+                <option value="">-- Selecciona --</option>
+                <option>Mesa 1 (2 personas)</option>
+                <option>Mesa 2 (2 personas)</option>
+                <option>Mesa 3 (4 personas)</option>
+                <option>Mesa 4 (4 personas)</option>
+                <option>Mesa 5 (6 personas)</option>
+                <option>Mesa 6 (6 personas)</option>
+                <option>Mesa 7 (8 personas)</option>
+                <option>Mesa 8 (8 personas)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Número de Personas</label>
+              <input type="number" id="f-personas" min="1" max="10" placeholder="2" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Ocasión / Notas</label>
+            <textarea id="f-notas" rows="3" placeholder="Cumpleaños, aniversario, preferencias especiales..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-secondary" onclick="limpiarFormulario()">Limpiar</button>
+            <button class="btn-primary" onclick="guardarReserva()">Confirmar Reserva</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA: LISTA RESERVAS -->
+    <section class="view" id="view-reservas">
+      <div class="reservas-toolbar">
+        <div class="filter-tabs">
+          <button class="filter-tab active" onclick="filtrarEstado('todas', this)">Todas</button>
+          <button class="filter-tab" onclick="filtrarEstado('Confirmada', this)">Confirmadas</button>
+          <button class="filter-tab" onclick="filtrarEstado('Pendiente', this)">Pendientes</button>
+          <button class="filter-tab" onclick="filtrarEstado('Cancelada', this)">Canceladas</button>
+        </div>
+        <button class="btn-primary small" onclick="switchView('nueva')">+ Nueva</button>
+      </div>
+      <div id="reservas-table-wrap">
+        <table class="reservas-table">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Mesa</th>
+              <th>Personas</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="reservas-tbody"></tbody>
+        </table>
+        <div id="empty-state" class="empty-state" style="display:none">
+          <span>📋</span>
+          <p>No hay reservas registradas</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA: CALENDARIO -->
+    <section class="view" id="view-calendario">
+      <div class="cal-header">
+        <button class="btn-ghost" onclick="cambiarMes(-1)">← Anterior</button>
+        <h2 id="cal-titulo"></h2>
+        <button class="btn-ghost" onclick="cambiarMes(1)">Siguiente →</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-detalle" id="cal-detalle" style="display:none">
+        <div class="panel-header">
+          <h3 id="cal-detalle-fecha"></h3>
+          <button class="btn-ghost" onclick="cerrarDetalle()">✕ Cerrar</button>
+        </div>
+        <div id="cal-detalle-lista"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL EDITAR -->
+  <div class="modal-overlay" id="modal-overlay" onclick="cerrarModal()"></div>
+  <div class="modal" id="modal-editar">
+    <div class="modal-header">
+      <h3>Editar Reserva</h3>
+      <button onclick="cerrarModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id" />
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" id="edit-nombre" />
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" id="edit-telefono" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" id="edit-fecha" />
+        </div>
+        <div class="form-group">
+          <label>Hora</label>
+          <select id="edit-hora">
+            <option>12:00</option><option>12:30</option>
+            <option>13:00</option><option>13:30</option>
+            <option>14:00</option><option>14:30</option>
+            <option>19:00</option><option>19:30</option>
+            <option>20:00</option><option>20:30</option>
+            <option>21:00</option><option>21:30</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Mesa</label>
+          <select id="edit-mesa">
+            <option>Mesa 1 (2 personas)</option>
+            <option>Mesa 2 (2 personas)</option>
+            <option>Mesa 3 (4 personas)</option>
+            <option>Mesa 4 (4 personas)</option>
+            <option>Mesa 5 (6 personas)</option>
+            <option>Mesa 6 (6 personas)</option>
+            <option>Mesa 7 (8 personas)</option>
+            <option>Mesa 8 (8 personas)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estado</label>
+          <select id="edit-estado">
+            <option>Confirmada</option>
+            <option>Pendiente</option>
+            <option>Cancelada</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notas</label>
+        <textarea id="edit-notas" rows="2"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn-primary" onclick="actualizarReserva()">Guardar Cambios</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
