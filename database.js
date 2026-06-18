@@ -5,6 +5,7 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS reservas (
     id        TEXT PRIMARY KEY,
     nombre    TEXT NOT NULL,
+    dni       TEXT NOT NULL,
     telefono  TEXT NOT NULL,
     fecha     TEXT NOT NULL,
     hora      TEXT NOT NULL,

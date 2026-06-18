@@ -102,48 +102,40 @@
           <div class="form-row">
             <div class="form-group">
               <label>Nombre del Cliente</label>
-              <input type="text" id="f-nombre" placeholder="Ej. María López" />
+              <input type="text" id="f-nombre" placeholder="Ej. María López"
+                oninput="this.value=this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ\s]/g,'')" />
             </div>
             <div class="form-group">
-              <label>Teléfono</label>
-              <input type="tel" id="f-telefono" placeholder="+51 999 000 000" />
+              <label>DNI</label>
+              <input type="text" id="f-dni" placeholder="Ej. 12345678" maxlength="8"
+                oninput="this.value=this.value.replace(/\D/g,'').slice(0,8)" />
             </div>
           </div>
 
           <div class="form-row">
+            <div class="form-group">
+              <label>Teléfono</label>
+              <input type="tel" id="f-telefono" placeholder="Ej. 999000000" maxlength="9"
+                oninput="this.value=this.value.replace(/\D/g,'').slice(0,9)" />
+            </div>
             <div class="form-group">
               <label>Fecha</label>
               <input type="date" id="f-fecha" />
             </div>
-            <div class="form-group">
-              <label>Hora</label>
-              <select id="f-hora">
-                <option value="">-- Selecciona --</option>
-                <option>12:00</option><option>12:30</option>
-                <option>13:00</option><option>13:30</option>
-                <option>14:00</option><option>14:30</option>
-                <option>19:00</option><option>19:30</option>
-                <option>20:00</option><option>20:30</option>
-                <option>21:00</option><option>21:30</option>
-              </select>
-            </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label>Mesa</label>
-              <select id="f-mesa">
-                <option value="">-- Selecciona --</option>
-                <option>Mesa 1 (2 personas)</option>
-                <option>Mesa 2 (2 personas)</option>
-                <option>Mesa 3 (4 personas)</option>
-                <option>Mesa 4 (4 personas)</option>
-                <option>Mesa 5 (6 personas)</option>
-                <option>Mesa 6 (6 personas)</option>
-                <option>Mesa 7 (8 personas)</option>
-                <option>Mesa 8 (8 personas)</option>
-              </select>
+              <label>Hora <small style="color:var(--muted)">(HH:MM)</small></label>
+              <input type="text" id="f-hora" placeholder="Ej. 20:00" maxlength="5" />
             </div>
+            <div class="form-group">
+              <label>Mesa</label>
+              <input type="text" id="f-mesa" placeholder="Ej. Mesa 3 (4 personas)" />
+            </div>
+          </div>
+
+          <div class="form-row">
             <div class="form-group">
               <label>Número de Personas</label>
               <input type="number" id="f-personas" min="1" max="10" placeholder="2" />
@@ -227,44 +219,37 @@
       <div class="form-row">
         <div class="form-group">
           <label>Nombre</label>
-          <input type="text" id="edit-nombre" />
+          <input type="text" id="edit-nombre"
+            oninput="this.value=this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ\s]/g,'')" />
         </div>
         <div class="form-group">
-          <label>Teléfono</label>
-          <input type="tel" id="edit-telefono" />
+          <label>DNI</label>
+          <input type="text" id="edit-dni" maxlength="8"
+            oninput="this.value=this.value.replace(/\D/g,'').slice(0,8)" />
         </div>
       </div>
       <div class="form-row">
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" id="edit-telefono" maxlength="9"
+            oninput="this.value=this.value.replace(/\D/g,'').slice(0,9)" />
+        </div>
         <div class="form-group">
           <label>Fecha</label>
           <input type="date" id="edit-fecha" />
         </div>
-        <div class="form-group">
-          <label>Hora</label>
-          <select id="edit-hora">
-            <option>12:00</option><option>12:30</option>
-            <option>13:00</option><option>13:30</option>
-            <option>14:00</option><option>14:30</option>
-            <option>19:00</option><option>19:30</option>
-            <option>20:00</option><option>20:30</option>
-            <option>21:00</option><option>21:30</option>
-          </select>
-        </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label>Mesa</label>
-          <select id="edit-mesa">
-            <option>Mesa 1 (2 personas)</option>
-            <option>Mesa 2 (2 personas)</option>
-            <option>Mesa 3 (4 personas)</option>
-            <option>Mesa 4 (4 personas)</option>
-            <option>Mesa 5 (6 personas)</option>
-            <option>Mesa 6 (6 personas)</option>
-            <option>Mesa 7 (8 personas)</option>
-            <option>Mesa 8 (8 personas)</option>
-          </select>
+          <label>Hora <small style="color:var(--muted)">(HH:MM)</small></label>
+          <input type="text" id="edit-hora" maxlength="5" placeholder="Ej. 20:00" />
         </div>
+        <div class="form-group">
+          <label>Mesa</label>
+          <input type="text" id="edit-mesa" placeholder="Ej. Mesa 3 (4 personas)" />
+        </div>
+      </div>
+      <div class="form-row">
         <div class="form-group">
           <label>Estado</label>
           <select id="edit-estado">
