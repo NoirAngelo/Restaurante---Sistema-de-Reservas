@@ -6,11 +6,26 @@ let filtroActual = "todas";
 let mesCalendario = new Date().getMonth();
 let anioCalendario = new Date().getFullYear();
 
+// ─── LOGIN ────────────────────────────────────────────────────────
+const CREDENCIALES = { usuario: "admin", contrasena: "1234" };
+
+function iniciarSesion() {
+  const user = document.getElementById("login-user").value.trim();
+  const pass = document.getElementById("login-pass").value;
+  const err  = document.getElementById("login-error");
+  if (user === CREDENCIALES.usuario && pass === CREDENCIALES.contrasena) {
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("app-screen").style.display   = "block";
+    cargarDatos();
+  } else {
+    err.style.display = "block";
+  }
+}
+
 // ─── INICIALIZACIÓN ───────────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
   initFechaHoy();
   setFechaMinima();
-  await cargarDatos();
 });
 
 // ─── PERSISTENCIA (API + SQLite) ──────────────────────────────────
@@ -34,13 +49,6 @@ function exportarJSON() {
   a.download = "reservas.json";
   a.click();
   URL.revokeObjectURL(url);
-}
-
-// ─── CARGA DESDE JSON ─────────────────────────────────────────────
-async function cargarDesdeJSON() {
-  const response = await fetch("reservas.json");
-  const data = await response.json();
-  reservas = data.reservas;
 }
 
 // ─── GENERAR ID ───────────────────────────────────────────────────
@@ -135,15 +143,24 @@ function renderDashboard() {
 // ─── FORMULARIO — NUEVA RESERVA ───────────────────────────────────
 async function guardarReserva() {
   const nombre   = document.getElementById("f-nombre").value.trim();
+  const dni      = document.getElementById("f-dni").value.trim();
   const telefono = document.getElementById("f-telefono").value.trim();
   const fecha    = document.getElementById("f-fecha").value;
-  const hora     = document.getElementById("f-hora").value;
-  const mesa     = document.getElementById("f-mesa").value;
+  const hora     = document.getElementById("f-hora").value.trim();
+  const mesa     = document.getElementById("f-mesa").value.trim();
   const personas = parseInt(document.getElementById("f-personas").value) || 0;
   const notas    = document.getElementById("f-notas").value.trim();
 
-  if (!nombre || !telefono || !fecha || !hora || !mesa || !personas) {
+  if (!nombre || !dni || !telefono || !fecha || !hora || !mesa || !personas) {
     showToast("⚠️ Completa todos los campos obligatorios.", "error");
+    return;
+  }
+  if (dni.length !== 8) {
+    showToast("⚠️ El DNI debe tener exactamente 8 dígitos.", "error");
+    return;
+  }
+  if (telefono.length !== 9) {
+    showToast("⚠️ El teléfono debe tener exactamente 9 dígitos.", "error");
     return;
   }
   if (personas < 1 || personas > 10) {
@@ -152,7 +169,7 @@ async function guardarReserva() {
   }
 
   const nueva = {
-    id: genId(), nombre, telefono, fecha, hora, mesa, personas, notas,
+    id: genId(), nombre, dni, telefono, fecha, hora, mesa, personas, notas,
     estado: "Confirmada", creado: new Date().toISOString()
   };
 
@@ -176,7 +193,7 @@ async function guardarReserva() {
 }
 
 function limpiarFormulario() {
-  ["f-nombre","f-telefono","f-fecha","f-hora","f-mesa","f-personas","f-notas"]
+  ["f-nombre","f-dni","f-telefono","f-fecha","f-hora","f-mesa","f-personas","f-notas"]
     .forEach(id => { document.getElementById(id).value = ""; });
 }
 
@@ -230,7 +247,8 @@ function filtrarEstado(estado, btn) {
 function buscarReserva() {
   const q = document.getElementById("searchInput").value.toLowerCase().trim();
   if (!q) { renderTabla(); return; }
-  const resultado = reservas.filter(r =>
+  const base = filtroActual === "todas" ? reservas : reservas.filter(r => r.estado === filtroActual);
+  const resultado = base.filter(r =>
     r.nombre.toLowerCase().includes(q) ||
     r.mesa.toLowerCase().includes(q) ||
     r.telefono.includes(q) ||
@@ -246,6 +264,7 @@ function abrirModal(id) {
 
   document.getElementById("edit-id").value       = r.id;
   document.getElementById("edit-nombre").value   = r.nombre;
+  document.getElementById("edit-dni").value      = r.dni || "";
   document.getElementById("edit-telefono").value = r.telefono;
   document.getElementById("edit-fecha").value    = r.fecha;
   document.getElementById("edit-hora").value     = r.hora;
@@ -273,6 +292,7 @@ async function actualizarReserva() {
 
   const datos = {
     nombre:   document.getElementById("edit-nombre").value.trim(),
+    dni:      document.getElementById("edit-dni").value.trim(),
     telefono: document.getElementById("edit-telefono").value.trim(),
     fecha, hora, mesa,
     personas: reservas[idx].personas,

@@ -9,6 +9,42 @@
 </head>
 <body>
 
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen">
+    <div class="login-wrapper">
+      <div class="login-left">
+        <div class="login-brand">
+          <span class="logo-icon">⬡</span>
+          <span class="logo-text">Restaurante</span>
+        </div>
+        <h2 class="login-tagline">Gestiona tus<br/><span>reservas</span><br/>con precisión.</h2>
+        <p class="login-sub">Sistema centralizado de mesas, horarios y clientes para tu restaurante.</p>
+      </div>
+      <div class="login-right">
+        <div class="login-card">
+          <div class="login-card-header">
+            <h3>Bienvenido</h3>
+            <p>Ingresa tus credenciales para continuar</p>
+          </div>
+          <div class="login-field">
+            <label>Usuario</label>
+            <input type="text" id="login-user" placeholder="admin" autocomplete="username" />
+          </div>
+          <div class="login-field">
+            <label>Contraseña</label>
+            <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"
+              onkeydown="if(event.key==='Enter') iniciarSesion()" />
+          </div>
+          <p id="login-error" class="login-error" style="display:none">Usuario o contraseña incorrectos.</p>
+          <button class="login-btn" onclick="iniciarSesion()">Ingresar →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP SCREEN -->
+  <div id="app-screen" style="display:none;">
+
   <!-- SIDEBAR NAV -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
@@ -274,5 +310,6 @@
   <div class="toast" id="toast"></div>
 
   <script src="app.js"></script>
+  </div><!-- /app-screen -->
 </body>
 </html>
